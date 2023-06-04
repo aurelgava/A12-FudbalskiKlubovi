@@ -331,7 +331,7 @@ public class GlavniProzor extends javax.swing.JFrame {
                 //red[2] = rs.getString("Grad");                
                 GradDO grad = new GradDO();
                 grad.naziv = rs.getString("Grad");
-                grad.ID = rs.getInt("Grad.GradID");
+                grad.ID = rs.getInt("GradID");
                 red[2] = grad;
                 red[3] = rs.getInt("Kapacitet");
                 red[4] = rs.getString("Adresa");
@@ -360,8 +360,47 @@ public class GlavniProzor extends javax.swing.JFrame {
         }
     }
 
-    void traziDrzavu(String text) {
-        //TODO
+    void traziDrzavu(String drzava) {
+        try {
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM (Stadion INNER JOIN Grad ON Grad.GradID = Stadion.GradID)"
+                    + " INNER JOIN Drzava ON Grad.DrzavaID = Drzava.DrzavaID "
+                    + " WHERE Drzava.Naziv = ?");
+            ps.setString(1, drzava);
+            ResultSet rs = ps.executeQuery();
+            /*Ovo što sledi je copy/paste dela koda iz metode populate() i duša me boli jer sam to uradio.
+                Pravilno je bilo da poštujem princip "ne ponavljanja koda" tako što bih napravio 
+                metodu koja ima samo kod za popunjavanje tabele (ovaj koji sam ovde kopira) i koja bi kao parametar imala
+                jedan objekat klase ResultSet. Ta metoda bi se pozivala odavde i iz populate() metode.
+                To ipak nisam uradio jer hoću da sve populate metode budu što je više moguće iste u svim zadacima.
+            */
+            
+            DefaultTableModel dtm = new DefaultTableModel();
+            dtm.addColumn("Sifra");
+            dtm.addColumn("Naziv");
+            dtm.addColumn("Grad");
+            dtm.addColumn("Kapacitet");
+            dtm.addColumn("Adresa");
+            boolean imaBarJedanStadion = false;
+            while(rs.next()){
+                imaBarJedanStadion = true;
+                Object[] red = new Object[5];
+                red[0] = rs.getInt("StadionID");
+                red[1] = rs.getString("Naziv");
+                //red[2] = rs.getString("Grad");                
+                GradDO grad = new GradDO();
+                grad.naziv = rs.getString("Grad");
+                grad.ID = rs.getInt("GradID");
+                red[2] = grad;
+                red[3] = rs.getInt("Kapacitet");
+                red[4] = rs.getString("Adresa");
+                dtm.addRow(red);
+            }
+            if(imaBarJedanStadion){
+                jTable1.setModel(dtm);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(GlavniProzor.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     
