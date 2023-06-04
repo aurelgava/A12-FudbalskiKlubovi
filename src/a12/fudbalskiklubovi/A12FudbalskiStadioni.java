@@ -9,7 +9,7 @@ package a12.fudbalskiklubovi;
  *
  * @author Kab15prof
  */
-public class A12FudbalskiKlubovi {
+public class A12FudbalskiStadioni {
 
     /**
      * @param args the command line arguments
