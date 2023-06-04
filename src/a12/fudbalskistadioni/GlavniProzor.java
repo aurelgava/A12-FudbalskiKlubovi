@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package a12.fudbalskiklubovi;
+package a12.fudbalskistadioni;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -79,19 +79,34 @@ public class GlavniProzor extends javax.swing.JFrame {
         jSpinner2.setModel(new javax.swing.SpinnerNumberModel(0, null, null, 1000));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resursi/loupe.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resursi/loupe.png"))); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resursi/update.png"))); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resursi/loupe.png"))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resursi/data-management.png"))); // NOI18N
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resursi/loupe.png"))); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resursi/info.png"))); // NOI18N
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resursi/loupe.png"))); // NOI18N
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resursi/emergency-exit.png"))); // NOI18N
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -223,8 +238,23 @@ public class GlavniProzor extends javax.swing.JFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Greska prilikom azuriranja baze", "Greska!",JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(GlavniProzor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NumberFormatException ex){
+            JOptionPane.showMessageDialog(this, "Popunite obavezna polja", "Greska!",JOptionPane.WARNING_MESSAGE);
+            Logger.getLogger(GlavniProzor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        new StatistikaProzor().setVisible(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        new PretragaProzor(this).setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -329,4 +359,10 @@ public class GlavniProzor extends javax.swing.JFrame {
             Logger.getLogger(GlavniProzor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    void traziDrzavu(String text) {
+        //TODO
+    }
+
+    
 }
