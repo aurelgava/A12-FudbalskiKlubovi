@@ -120,8 +120,11 @@ public class StatistikaProzor extends javax.swing.JFrame {
     private void populate() {
         try {
             Connection c = DriverManager.getConnection("jdbc:ucanaccess://src\\resursi\\Fudbalski stadioni.accdb");
-            PreparedStatement ps = c.prepareStatement("TODO");
-            ResultSet rs = ps.executeQuery();
+            Statement s = c.createStatement();
+            ResultSet rs = s.executeQuery("SELECT Stadion.Naziv AS Stadion, COUNT(Utakmica.UtakmicaID) AS BrojUtakmica\n" +
+                "FROM (Stadion INNER JOIN Klub ON Stadion.StadionID = Klub.StadionID) INNER JOIN Utakmica ON Utakmica.DomacinID = Klub.KlubID\n" +
+                "WHERE YEAR(Utakmica.DatumIgranja)  = YEAR(Date()) - 1\n" +
+                "GROUP BY Stadion.Naziv;");
             
             //Crtanje grafika
             DefaultCategoryDataset dataset = new DefaultCategoryDataset();
